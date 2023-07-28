@@ -5,28 +5,28 @@
 - [Videos](#videos)
   - [POST /videos](#post-videos)
   - [GET /videos](#get-videos)
-  - [**GET /videos/:id**](#get-videosid)
-  - [**PATCH /videos/:id**](#patch-videosid)
-  - [**DELETE /videos/:id**](#delete-videosid)
-  - [**GET /videos/thumbnails**](#get-videosthumbnails)
+  - [GET /videos/:id](#get-videosid)
+  - [PATCH /videos/:id](#patch-videosid)
+  - [DELETE /videos/:id](#delete-videosid)
+  - [GET /videos/thumbnails](#get-videosthumbnails)
 - [Products](#products)
-  - [**GET /products**](#get-products)
-  - [**GET /:videoId/products**](#get-videoidproducts)
-  - [**GET /products/:id**](#get-productsid)
-  - [**POST /:videoId/products**](#post-videoidproducts)
-  - [**PATCH /products/:id**](#patch-productsid)
-  - [**DELETE /products/:id**](#delete-productsid)
+  - [GET /products](#get-products)
+  - [GET /:videoId/products](#get-videoidproducts)
+  - [GET /products/:id](#get-productsid)
+  - [POST /:videoId/products](#post-videoidproducts)
+  - [PATCH /products/:id](#patch-productsid)
+  - [DELETE /products/:id](#delete-productsid)
 - [Comments](#comments)
-  - [**GET /:videoId/comments**](#get-videoidcomments)
-  - [**POST /:videoId/comments**](#post-videoidcomments)
-  - [**PATCH /comments/:id**](#patch-commentsid)
-  - [**DELETE /comments/:id**](#delete-commentsid)
+  - [GET /:videoId/comments](#get-videoidcomments)
+  - [POST /:videoId/comments](#post-videoidcomments)
+  - [PATCH /comments/:id](#patch-commentsid)
+  - [DELETE /comments/:id](#delete-commentsid)
 - [Users](#users)
-  - [**POST /users**](#post-users)
-  - [**GET /users**](#get-users)
-  - [**GET /users/:id**](#get-usersid)
-  - [**PATCH /users/:id**](#patch-usersid)
-  - [**DELETE /users/:id**](#delete-usersid)
+  - [POST /users](#post-users)
+  - [GET /users](#get-users)
+  - [GET /users/:id](#get-usersid)
+  - [PATCH /users/:id](#patch-usersid)
+  - [DELETE /users/:id](#delete-usersid)
 
 # Minimum Requirment API
 
@@ -103,7 +103,7 @@ Returns all videos in the system.
 }
 ```
 
-## **GET /videos/:id**
+## GET /videos/:id
 
 Returns the specified video.
 
@@ -120,7 +120,7 @@ Returns the specified video.
   **Code:** 404  
   **Content:** `{ error : "video not found" }`
 
-## **PATCH /videos/:id**
+## PATCH /videos/:id
 
 Update specified video.
 
@@ -149,7 +149,7 @@ Update specified video.
   **Code:** 400  
   **Content:** `{ error : {error message} }`
 
-## **DELETE /videos/:id**
+## DELETE /videos/:id
 
 Delete specified video.
 
@@ -166,7 +166,7 @@ Delete specified video.
   **Code:** 404  
   **Content:** `{ error : "Video not found" }`
 
-## **GET /videos/thumbnails**
+## GET /videos/thumbnails
 
 Returns all videos thumbhnail in the.
 
@@ -208,7 +208,7 @@ Returns all videos thumbhnail in the.
 }
 ```
 
-## **GET /products**
+## GET /products
 
 Returns all products in the system.
 
@@ -232,7 +232,7 @@ Returns all products in the system.
 }
 ```
 
-## **GET /:videoId/products**
+## GET /:videoId/products
 
 Returns products on specified video.
 
@@ -256,7 +256,7 @@ Returns products on specified video.
 }
 ```
 
-## **GET /products/:id**
+## GET /products/:id
 
 Returns the specified product.
 
@@ -273,7 +273,7 @@ Returns the specified product.
   **Code:** 404  
   **Content:** `{ error : "Product not found" }`
 
-## **POST /:videoId/products**
+## POST /:videoId/products
 
 Add new product.
 
@@ -300,7 +300,7 @@ data: <product_object>}, }`
   **Code:** 400  
   **Content:** `{ error : {error.message} }`
 
-## **PATCH /products/:id**
+## PATCH /products/:id
 
 Update specified product.
 
@@ -330,7 +330,7 @@ Update specified product.
   **Code:** 400  
   **Content:** `{ error : {error message} }`
 
-## **DELETE /products/:id**
+## DELETE /products/:id
 
 Delete specified user.
 
@@ -361,7 +361,7 @@ Delete specified user.
 }
 ```
 
-## **GET /:videoId/comments**
+## GET /:videoId/comments
 
 Returns comments on specified video.
 
@@ -385,7 +385,7 @@ Returns comments on specified video.
 }
 ```
 
-## **POST /:videoId/comments**
+## POST /:videoId/comments
 
 Add new comment.
 
@@ -411,7 +411,7 @@ data: <product_object>}, }`
   **Code:** 400  
   **Content:** `{ error : {error.message} }`
 
-## **PATCH /comments/:id**
+## PATCH /comments/:id
 
 Update specified comment.
 
@@ -439,7 +439,7 @@ Update specified comment.
   **Code:** 400  
   **Content:** `{ error : {error message} }`
 
-## **DELETE /comments/:id**
+## DELETE /comments/:id
 
 Delete specified comment.
 
@@ -469,7 +469,7 @@ Delete specified comment.
 }
 ```
 
-## **POST /users**
+## POST /users
 
 Add new user.
 
@@ -495,7 +495,7 @@ data: <user_object>}, }`
   **Code:** 400  
   **Content:** `{ error : {error.message} }`
 
-## **GET /users**
+## GET /users
 
 Returns all users in the system.
 
@@ -519,7 +519,7 @@ Returns all users in the system.
 }
 ```
 
-## **GET /users/:id**
+## GET /users/:id
 
 Returns the specified user.
 
@@ -536,7 +536,7 @@ Returns the specified user.
   **Code:** 404  
   **Content:** `{ error : "User not found" }`
 
-## **PATCH /users/:id**
+## PATCH /users/:id
 
 Update user.
 
@@ -565,7 +565,7 @@ Update user.
   **Code:** 400  
   **Content:** `{ error : {error message} }`
 
-## **DELETE /users/:id**
+## DELETE /users/:id
 
 Delete specified user.
 

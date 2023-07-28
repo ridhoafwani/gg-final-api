@@ -182,4 +182,4 @@ The `users` collection represents users in your application. Each user document 
 ## API Endpoints List
 
 > **Note**
-> Cek All API Endpoints here : [API Endpoints List](readme_asset/API/)
+> Cek All API Endpoints here : [API Endpoints List](APIEndpointsList.md)
