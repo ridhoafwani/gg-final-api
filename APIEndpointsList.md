@@ -3,8 +3,8 @@
 - [Table of Contents](#table-of-contents)
 - [Minimum Requirment API](#minimum-requirment-api)
 - [Videos](#videos)
-  - [**POST /videos**](#post-videos)
-  - [**GET /videos**](#get-videos)
+  - [POST /videos](#post-videos)
+  - [GET /videos](#get-videos)
   - [**GET /videos/:id**](#get-videosid)
   - [**PATCH /videos/:id**](#patch-videosid)
   - [**DELETE /videos/:id**](#delete-videosid)
@@ -51,7 +51,7 @@
 }
 ```
 
-## **POST /videos**
+## POST /videos
 
 Add new video.
 
@@ -79,7 +79,7 @@ data: <video_object>}, }`
   **Code:** 400  
   **Content:** `{ error : {error.message} }`
 
-## **GET /videos**
+## GET /videos
 
 Returns all videos in the system.
 
