@@ -26,9 +26,9 @@ router.post('/', controller.postVideo);
 
 router.get('/', controller.getVideos);
 
-router.get('/:id', controller.getVideoById);
-
 router.get('/thumbnails/', controller.getThumbnails);
+
+router.get('/:id', controller.getVideoById);
 
 router.delete('/:id', controller.deleteVideoById);
 

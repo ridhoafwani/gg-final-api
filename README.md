@@ -4,13 +4,23 @@ This is a simple Tokopedia Play clone backend as part of my journey in Generasi 
 
 ## Table of Contents
 
-- [Getting Started](#getting-started)
-  - [Prerequisites](#prerequisites)
-  - [Installation](#installation)
-  - [Running the Application](#running-the-application)
-- [Usage](#usage)
-- [Database Structure](#database-structure)
-- [API Endpoints](#api-endpoints)
+- [GG Midterm (Simple Tokopedia Play Clone Backend)](#gg-midterm-simple-tokopedia-play-clone-backend)
+  - [Table of Contents](#table-of-contents)
+  - [Getting Started](#getting-started)
+    - [Prerequisites](#prerequisites)
+    - [Installation](#installation)
+    - [Adding .env File to the Project](#adding-env-file-to-the-project)
+    - [Running the Application](#running-the-application)
+  - [Usage](#usage)
+  - [Project Structure](#project-structure)
+  - [Database Structure](#database-structure)
+    - [Videos Collection](#videos-collection)
+    - [Products Collection](#products-collection)
+    - [Comments Collection](#comments-collection)
+    - [Users Collection](#users-collection)
+      - [Please note:](#please-note)
+      - [Additionally:](#additionally)
+  - [API Endpoints List](#api-endpoints-list)
 
 ## Getting Started
 
@@ -39,13 +49,10 @@ npm install
 
 ### Adding .env File to the Project
 
+> **Note**
+> No worries! I got you covered! 🌟 You can totally skip this step! I've already included my .env file to make things super smooth for the grader. You won't need to bother setting up a new database. Just dive right in and enjoy exploring the wonders of my Atlas database! 😎🚀
+
 To manage environment variables and sensitive configuration settings in your project, you can make use of a `.env` file. This file allows you to store key-value pairs, where each pair represents an environment variable.
-
----
-
-#### If you are GG grader, I already provide my .env file in LMS submission
-
----
 
 Follow the steps below to add a `.env` file to your project:
 
@@ -81,9 +88,44 @@ The API will be available at `http://localhost:3000`.
 
 You can use tools like [Postman](https://www.postman.com/) or [cURL](https://curl.se/) to interact with the API endpoints. Refer to the [API Endpoints](#api-endpoints) section for more details.
 
-## API Endpoints List
+## Project Structure
 
-Cek All API Endpoints here : [API Endpoints List](APIEndpointsList.md)
+```plaintext
+gg-midterm/
+|-- app.js
+|-- package.json
+|-- .env
+|-- node_modules/
+|-- routes/
+| |-- commentRoute.js
+| |-- productRoute.js
+| |-- userRoute.js
+| |-- videoRoute.js
+|-- controllers/
+| |-- CommentController.js
+| |-- ProductController.js
+| |-- UserController.js
+| |-- VideoController.js
+|-- services/
+| |-- CommentService.js
+| |-- ProductService.js
+| |-- UserService.js
+| |-- VideoService.js
+|-- models/
+| |-- comment.js
+| |-- product.js
+| |-- user.js
+| |-- video.js
+|-- validator/
+| |-- commentValidator.js
+| |-- productValidator.js
+| |-- userValidator.js
+| |-- videoValidator.js
+|-- exceptions/
+| |-- ClientError.js
+| |-- InvarriantError.js
+| |-- NotFoundErro.js
+```
 
 ## Database Structure
 
@@ -134,5 +176,10 @@ The `users` collection represents users in your application. Each user document 
 
 #### Additionally:
 
-- The `comments` collection is not directly connected to the `users` collection, as per the project requirements we should provide name in the payload when doing comment so assume its not connected to each other.
-- `users` collection will be use when the app need authentication on next project
+- The `comments` collection isn't directly connected to the `users` collection. As per the project requirements, we should provide the name in the payload when making a comment. So, let's assume that they are not connected to each other.
+- The `users` collection will come in handy for adding authentication in the next project
+
+## API Endpoints List
+
+> **Note**
+> Cek All API Endpoints here : [API Endpoints List](APIEndpointsList.md)
