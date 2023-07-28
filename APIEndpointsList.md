@@ -33,10 +33,10 @@
 > **Note**
 > Here's the list of endpoints to meet the minimum requirement for the GIGIH 3.0 🚀
 
-- [**GET /videos/thumbnails**](#get-videosthumbnails)
-- [**GET /:videoId/products**](#get-videoidproducts)
-- [**GET /:videoId/comments**](#get-videoidcomments)
-- [**POST /:videoId/comments**](#post-videoidcomments)
+- [GET /videos/thumbnails](#get-videosthumbnails)
+- [GET /:videoId/products](#get-videoidproducts)
+- [GET /:videoId/comments](#get-videoidcomments)
+- [POST /:videoId/comments](#post-videoidcomments)
 
 # Videos
 
