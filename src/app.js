@@ -21,7 +21,7 @@ const app = express();
 app.use(express.json());
 
 app.get('/', (req, res) => {
-    res.send('This is midterm');
+    res.send('This is final api');
 });
 
 app.use((req, res, next) => {
