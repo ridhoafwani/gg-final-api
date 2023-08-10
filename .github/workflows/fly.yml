@@ -18,6 +18,13 @@ jobs:
         run: |
           echo "Listing all files in the current directory"
           ls -a
+      - name: Display contents of specific files
+        run: |
+          echo "Displaying contents of .env file"
+          cat .env
+          
+          echo "Displaying contents of .dockerignore"
+          cat .dockerignore
       - uses: superfly/flyctl-actions/setup-flyctl@master
       - run: flyctl deploy --remote-only
         env:
