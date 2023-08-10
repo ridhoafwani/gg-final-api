@@ -21,7 +21,7 @@ const app = express();
 app.use(express.json());
 
 app.get('/', (req, res) => {
-    res.send('This is final api');
+    res.send('This is final api with github actions and docker container. Happy coding :)');
 });
 
 app.use((req, res, next) => {
