@@ -13,7 +13,7 @@ jobs:
         env:
           ENV_FILE: ${{ secrets.ENV_FILE }}
         run: |
-          echo "$ENV_FILE" > .env
+          echo "$ENV_FILE" | base64 --decode > .env
       - name: Debug .env
         run: cat .env
       - name: List all files in directory
