@@ -10,8 +10,10 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: "Create env file"
+        env:
+          ENV_FILE: ${{ secrets.ENV_FILE }}
         run: |
-          echo "${{ secrets.ENV_FILE }}" | base64 --decode > .env
+          echo $ENV_FILE | base64 --decode > .env
       - name: Debug .env
         run: cat .env
       - name: List all files in directory
