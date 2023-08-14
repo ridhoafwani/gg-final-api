@@ -19,6 +19,7 @@ This is a simple Tokopedia Play clone backend as part of my journey in Generasi 
     - [Comments Collection](#comments-collection)
     - [Users Collection](#users-collection)
   - [Database Seeding](#database-seeding)
+  - [Deployment](#deployment)
   - [API Endpoints List](#api-endpoints-list)
 
 ## Getting Started
@@ -161,6 +162,10 @@ To perform the database seeding, follow these steps:
    This command will execute the database seeding process, populating the necessary tables with sample data.
 
 Please note that this process is intended for development and testing purposes. It's essential to have a backup of your data before running the seeding command, as it will overwrite existing data in the database.
+
+## Deployment
+
+This API is deployed and accessible at: [https://ggfinalapi.ridhoafwani.dev/](https://ggfinalapi.ridhoafwani.dev/)
 
 ## API Endpoints List
 

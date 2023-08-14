@@ -28,7 +28,7 @@ app.use(corsMiddleware);
 app.use(express.json());
 
 app.get('/', (req, res) => {
-    res.send('This is the final API with GitHub Actions and Docker container. Happy coding :)');
+    res.send('This is GG Final Project API with GitHub Actions & Docker. Happy coding :)');
 });
 
 // Route Handlers
