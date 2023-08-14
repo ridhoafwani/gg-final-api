@@ -1,9 +1,11 @@
+/* eslint-disable no-underscore-dangle */
 const InvariantError = require('../exceptions/InvariantError');
 const NotFoundError = require('../exceptions/NotFoundError');
 
 class CommentService {
-    constructor(commentModel) {
+    constructor(commentModel, userModel) {
         this.Comment = commentModel;
+        this.User = userModel;
     }
 
     addComment = async (comment) => {
@@ -18,11 +20,24 @@ class CommentService {
 
     getCommentsByVideoId = async (videoId) => {
         try {
-            const result = await this.Comment.find({ videoId });
-            if (!result) {
+            const comments = await this.Comment.find({ videoId }).populate('userId', 'name profilePictUrl', this.user).exec();
+
+            if (!comments) {
                 throw new NotFoundError('Comments not found');
             }
-            return result;
+
+            const formattedComments = comments.map((comment) => ({
+                _id: comment._id,
+                comment: comment.comment,
+                timestamp: comment.timestamp,
+                user: {
+                    id: comment.userId._id,
+                    name: comment.userId.name,
+                    profilePictUrl: comment.userId.profilePictUrl,
+                },
+            }));
+
+            return formattedComments;
         } catch (err) {
             throw new InvariantError(err.message);
         }

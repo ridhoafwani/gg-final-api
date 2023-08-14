@@ -7,7 +7,7 @@ class VideoService {
 
     getThumbnails = async () => {
         try {
-            const result = await this.Model.find().select('thumbnail');
+            const result = await this.Model.find().select('thumbnail title');
             return result;
         } catch (err) {
             throw new Error(err.message);

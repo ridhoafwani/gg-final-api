@@ -1,24 +1,15 @@
+/* eslint-disable class-methods-use-this */
+/* eslint-disable no-underscore-dangle */
+const jwt = require('jsonwebtoken');
 const InvariantError = require('../exceptions/InvariantError');
-const { vlaidatePostUser, vlaidatePatchUser } = require('../validator/userValidator');
+const { vlaidatePatchUser, vlaidateSignUp, vlaidateSignIn } = require('../validator/userValidator');
 
 class UserController {
     constructor(userService) {
         this.userService = userService;
     }
 
-    postUser = async (req, res, next) => {
-        try {
-            const { error } = vlaidatePostUser(req.body);
-            if (error) throw new InvariantError(error.details[0].message);
-            const newUser = await this.userService.addUser(req.body);
-            res.status(201).json({
-                message: 'User created successfully',
-                data: newUser,
-            });
-        } catch (err) {
-            next(err);
-        }
-    };
+    createToken = (_id) => jwt.sign({ _id }, process.env.SECRET, { expiresIn: '3d' });
 
     getUser = async (req, res, next) => {
         try {
@@ -56,6 +47,42 @@ class UserController {
             await this.userService.deleteUser(req.params.id);
             res.json({
                 message: 'User deleted successfully',
+            });
+        } catch (err) {
+            next(err);
+        }
+    };
+
+    signupUser = async (req, res, next) => {
+        try {
+            const { error } = vlaidateSignUp(req.body);
+            if (error) throw new InvariantError(error.details[0].message);
+            const user = await this.userService.signupUser(req.body);
+            const token = this.createToken(user._id);
+            res.json({
+                email: user.email,
+                name: user.name,
+                id: user._id,
+                profile: user.profilePictUrl,
+                token,
+            });
+        } catch (err) {
+            next(err);
+        }
+    };
+
+    loginUser = async (req, res, next) => {
+        try {
+            const { error } = vlaidateSignIn(req.body);
+            if (error) throw new InvariantError(error.details[0].message);
+            const user = await this.userService.loginUser(req.body);
+            const token = this.createToken(user._id);
+            res.json({
+                email: user.email,
+                name: user.name,
+                id: user._id,
+                profile: user.profilePictUrl,
+                token,
             });
         } catch (err) {
             next(err);

@@ -2,46 +2,43 @@
 require('dotenv').config();
 const mongoose = require('mongoose');
 const express = require('express');
+const http = require('http');
+const corsMiddleware = require('./middleware/cors');
 const videoRoutes = require('./routes/videoRoute');
 const productRoutes = require('./routes/productRoute');
 const commentRoutes = require('./routes/commentRoute');
 const userRoutes = require('./routes/userRoute');
+const { initializeSocket } = require('./socket');
+const errorHandler = require('./middleware/errorHandler');
 
-const databaseUrl = process.env.DATABASE_URL;
-const port = process.env.PORT;
+const { DATABASE_URL, PORT } = process.env;
 
-mongoose.connect(databaseUrl, { useNewUrlParser: true, useUnifiedTopology: true });
+mongoose.connect(DATABASE_URL, { useNewUrlParser: true, useUnifiedTopology: true });
 const db = mongoose.connection;
 
 db.on('error', (error) => console.error(error));
 db.once('connected', () => console.log('Connected to Database'));
 
 const app = express();
+const server = http.createServer(app);
+initializeSocket(server);
+
+app.use(corsMiddleware);
 
 app.use(express.json());
 
 app.get('/', (req, res) => {
-    res.send('This is final api with github actions and docker container. Happy coding :)');
+    res.send('This is the final API with GitHub Actions and Docker container. Happy coding :)');
 });
 
-app.use((req, res, next) => {
-    res.header('Access-Control-Allow-Origin', '*');
-    res.header('Access-Control-Allow-Headers', '*');
-    res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, PATCH, DELETE, OPTIONS');
-    next();
-});
-
+// Route Handlers
 app.use('/videos', videoRoutes);
 app.use('/products', productRoutes);
 app.use('/comments', commentRoutes);
 app.use('/users', userRoutes);
 
-// eslint-disable-next-line no-unused-vars
-app.use((error, req, res, next) => {
-    res.status(error.status || 500);
-    res.json({
-        error: error.message,
-    });
+app.use(errorHandler);
+
+server.listen(PORT, () => {
+    console.log(`Server is running on port ${PORT}`);
 });
-app.listen(port);
-console.log(`Server is running on port ${port}`);

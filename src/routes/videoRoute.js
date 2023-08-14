@@ -2,6 +2,7 @@ const express = require('express');
 const VideoController = require('../controllers/VideoController');
 const VideoService = require('../services/VideoService');
 const videoModel = require('../models/video');
+const userModel = require('../models/user');
 
 const ProductController = require('../controllers/ProductController');
 const productModel = require('../models/product');
@@ -17,7 +18,7 @@ const controller = new VideoController(service);
 const productService = new ProductService(productModel);
 const productController = new ProductController(productService);
 
-const commentService = new CommentService(commentModel);
+const commentService = new CommentService(commentModel, userModel);
 const commentController = new CommentController(commentService);
 
 const router = express.Router();

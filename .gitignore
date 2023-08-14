@@ -1,3 +1,5 @@
 # npm
 node_modules
 .env
+env.txt
+.DS_Store
