@@ -8,10 +8,8 @@ const Product = require('../models/product');
 const videoData = require('./videoData');
 const getRandomProduct = require('./productData');
 
-// Load environment variables from .env file
 dotenv.config();
 
-// Connect to your MongoDB database
 mongoose.connect(process.env.DATABASE_URL, {
     useNewUrlParser: true,
     useUnifiedTopology: true,

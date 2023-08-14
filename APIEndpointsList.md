@@ -22,7 +22,8 @@
   - [PATCH /comments/:id](#patch-commentsid)
   - [DELETE /comments/:id](#delete-commentsid)
 - [Users](#users)
-  - [POST /users](#post-users)
+  - [POST /signin](#post-signin)
+  - [POST /signup](#post-signup)
   - [GET /users](#get-users)
   - [GET /users/:id](#get-usersid)
   - [PATCH /users/:id](#patch-usersid)
@@ -46,7 +47,7 @@
 {
   _id       : ObjectId
   title     : string
-  utl       : string
+  url       : string
   thumbnail : string
 }
 ```
@@ -74,7 +75,7 @@ Add new video.
 - **Success Response:**
 - **Code:** 201  
    **Content:** `{ message: 'Video added successfully',
-data: <video_object>}, }`
+data: {<video_object>}, }`
 - **Error Response:**  
   **Code:** 400  
   **Content:** `{ error : {error.message} }`
@@ -184,11 +185,13 @@ Returns all videos thumbhnail in the.
 {[
     {
         _id: ObjectId,
-        thumbnail: string
+        thumbnail: string,
+        title: string
     },
     {
         _id: ObjectId,
-        thumbnail: string
+        thumbnail: string,
+        title: string
     },
     .....
 ]}
@@ -205,6 +208,7 @@ Returns all videos thumbhnail in the.
   title: string,
   price: number,
   url: string,
+  thumbnail: string,
 }
 ```
 
@@ -287,6 +291,7 @@ Add new product.
     title: string,
     price: number,
     url: string,
+    thumbnail: string,
   }
 ```
 
@@ -295,7 +300,7 @@ Add new product.
 - **Success Response:**
 - **Code:** 201  
    **Content:** `{ message: 'Product added successfully',
-data: <product_object>}, }`
+data: {<product_object>}, }`
 - **Error Response:**  
   **Code:** 400  
   **Content:** `{ error : {error.message} }`
@@ -315,6 +320,7 @@ Update specified product.
     title: string,
     price: number,
     url: string,
+    thumbnail: string,
   }
 ```
 
@@ -355,8 +361,8 @@ Delete specified user.
 {
   _id: ObjectId,
   videoId: ObjectId,
+  userId: ObjectId,
   comment: string,
-  username: string,
   timestamp: Date,
 }
 ```
@@ -378,9 +384,27 @@ Returns comments on specified video.
 ```
 {
     [
-        {<comment_object>},
-        {<comment_object>},
-        {<comment_object>}
+        {
+          _id: ObjectId,
+          comment: String,
+          timestamp: Date,
+          user: {
+                    id: ObjectId,
+                    name: String,
+                    profilePictUrl: String,
+                },
+        },
+        {
+          _id: ObjectId,
+          comment: String,
+          timestamp: Date,
+          user: {
+                    id: ObjectId,
+                    name: String,
+                    profilePictUrl: String,
+                },
+        },
+        ....
     ]
 }
 ```
@@ -397,7 +421,7 @@ Add new comment.
 ```
   {
     comment: string,
-    username: string,
+    userId: string,
   }
 ```
 
@@ -406,7 +430,7 @@ Add new comment.
 - **Success Response:**
 - **Code:** 201  
    **Content:** `{ message: 'Comment added successfully',
-data: <product_object>}, }`
+data: {<product_object>}, }`
 - **Error Response:**  
   **Code:** 400  
   **Content:** `{ error : {error.message} }`
@@ -423,7 +447,7 @@ Update specified comment.
 ```
   {
     comment: string,
-    username: string,
+    userId: string,
   }
 ```
 
@@ -462,14 +486,15 @@ Delete specified comment.
 
 ```
 {
-  _id: ObjectId
-  name: string
-  email: string
-  profilePictUrl: string
+  _id: ObjectId,
+  name: string,
+  email: string,
+  password: string,
+  profilePictUrl: string,
 }
 ```
 
-## POST /users
+## POST /signin
 
 Add new user.
 
@@ -480,17 +505,49 @@ Add new user.
 ```
   {
     name: string,
-    email: string,
-    profilePictUrl: string (optional)
+    password: string,
   }
 ```
 
 - **Headers**  
   Content-Type: application/json
 - **Success Response:**
-- **Code:** 201  
-   **Content:** `{ message: 'User created successfully',
-data: <user_object>}, }`
+- **Code:** 200  
+   **Content:** `{ email: String,
+    name: String,
+    id: String,
+    profile: String,
+    token: String }`
+- **Error Response:**  
+  **Code:** 400  
+  **Content:** `{ error : {error.message} }`
+
+## POST /signup
+
+Add new user.
+
+- **URL Params**  
+  None
+- **Data Params**
+
+```
+  {
+    name: string,
+    password: string,
+    email: string,
+    profilePictUrl: string,
+  }
+```
+
+- **Headers**  
+  Content-Type: application/json
+- **Success Response:**
+- **Code:** 200  
+   **Content:** `{ email: String,
+    name: String,
+    id: String,
+    profile: String,
+    token: String }`
 - **Error Response:**  
   **Code:** 400  
   **Content:** `{ error : {error.message} }`
@@ -512,9 +569,9 @@ Returns all users in the system.
 ```
 {
     [
-        {<user_object>},
-        {<user_object>},
-        {<user_object>}
+        {<user_object (-password)>},
+        {<user_object (-password)>},
+        {<user_object (-password)>}
     ]
 }
 ```
@@ -531,7 +588,7 @@ Returns the specified user.
   Content-Type: application/json
 - **Success Response:**
 - **Code:** 200  
-  **Content:** `{ <user_object> }`
+  **Content:** `{ <user_object (-password)> }`
 - **Error Response:**  
   **Code:** 404  
   **Content:** `{ error : "User not found" }`

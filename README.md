@@ -1,10 +1,10 @@
-# GG Midterm (Simple Tokopedia Play Clone Backend)
+# GG Final Project Backend (Simple Tokopedia Play Clone)
 
 This is a simple Tokopedia Play clone backend as part of my journey in Generasi Gigih 3.0 program.
 
 ## Table of Contents
 
-- [GG Midterm (Simple Tokopedia Play Clone Backend)](#gg-midterm-simple-tokopedia-play-clone-backend)
+- [GG Final Project Backend (Simple Tokopedia Play Clone)](#gg-final-project-backend-simple-tokopedia-play-clone)
   - [Table of Contents](#table-of-contents)
   - [Getting Started](#getting-started)
     - [Prerequisites](#prerequisites)
@@ -18,8 +18,7 @@ This is a simple Tokopedia Play clone backend as part of my journey in Generasi 
     - [Products Collection](#products-collection)
     - [Comments Collection](#comments-collection)
     - [Users Collection](#users-collection)
-      - [Please note:](#please-note)
-      - [Additionally:](#additionally)
+  - [Database Seeding](#database-seeding)
   - [API Endpoints List](#api-endpoints-list)
 
 ## Getting Started
@@ -30,7 +29,7 @@ These instructions will get you a copy of the project up and running on your loc
 
 To run this application, you'll need the following software installed on your machine:
 
-- Node.js (version 12 or above)
+- Node.js
 - npm (Node Package Manager)
 
 ### Installation
@@ -38,7 +37,7 @@ To run this application, you'll need the following software installed on your ma
 1. Clone the repository:
 
 ```bash
-git clone https://github.com/ridhoafwani/gg-midterm.git
+git clone https://github.com/ridhoafwani/gg-final-api.git
 ```
 
 2. Install the dependencies:
@@ -49,30 +48,13 @@ npm install
 
 ### Adding .env File to the Project
 
-> **Note**
-> No worries! I got you covered! 🌟 You can totally skip this step! I've already included my .env file to make things super smooth for the grader. You won't need to bother setting up a new database. Just dive right in and enjoy exploring the wonders of my Atlas database! 😎🚀
-
 To manage environment variables and sensitive configuration settings in your project, you can make use of a `.env` file. This file allows you to store key-value pairs, where each pair represents an environment variable.
 
 Follow the steps below to add a `.env` file to your project:
 
 1. **Create a New File**: In the root directory of your project, create a new file named `.env`.
 
-2. **Define Environment Variables**: Open the `.env` file using a text editor and define your environment variables in the following format:
-
-   ```plaintext
-   PORT = your_port_value
-   DATABASE_URL= your_database_url_value
-   ```
-
-   Dont porget to provide their corresponding values.
-
-   For example:
-
-   ```plaintext
-   PORT = 3000
-   DATABASE_URL= "mongodb+srv://<username>:<password>@<mongo_cloud_database_url>/?retryWrites=true&w=majority"
-   ```
+2. **Define Environment Variables**: Open the `.env` file using a text editor and define your environment variables. follow the format that i provide in `.env.example`
 
 ### Running the Application
 
@@ -82,7 +64,15 @@ To start the Express.js API, run the following command:
 npm start
 ```
 
-The API will be available at `http://localhost:3000`.
+or
+
+```bash
+npm run dev
+```
+
+for development.
+
+The API will be available at `http://localhost:3000` (or the port specified in your env configuration).
 
 ## Usage
 
@@ -91,40 +81,23 @@ You can use tools like [Postman](https://www.postman.com/) or [cURL](https://cur
 ## Project Structure
 
 ```plaintext
-gg-midterm/
-|-- app.js
+gg-final-api/
+|-- node_modules/
 |-- package.json
 |-- .env
-|-- node_modules/
-|-- routes/
-| |-- commentRoute.js
-| |-- productRoute.js
-| |-- userRoute.js
-| |-- videoRoute.js
-|-- controllers/
-| |-- CommentController.js
-| |-- ProductController.js
-| |-- UserController.js
-| |-- VideoController.js
-|-- services/
-| |-- CommentService.js
-| |-- ProductService.js
-| |-- UserService.js
-| |-- VideoService.js
-|-- models/
-| |-- comment.js
-| |-- product.js
-| |-- user.js
-| |-- video.js
-|-- validator/
-| |-- commentValidator.js
-| |-- productValidator.js
-| |-- userValidator.js
-| |-- videoValidator.js
-|-- exceptions/
-| |-- ClientError.js
-| |-- InvarriantError.js
-| |-- NotFoundErro.js
+|-- Dockerfile
+|-- src
+|--|-- middleware/
+|--|-- routes/
+|--|-- controllers/
+|--|-- services/
+|--|-- models/
+|--|-- validator/
+|--|-- exceptions/
+|--|-- seeds/
+|--|-- app.js
+|--|-- socket.js
+
 ```
 
 ## Database Structure
@@ -149,6 +122,7 @@ The `products` collection represents products related to videos in your applicat
 - **`title`**: A string representing the title of the product. It is a required field, ensuring that every product document has a title.
 - **`price`**: A number representing the price of the product. It is a required field, ensuring that each product document has a valid price.
 - **`url`**: A string containing the URL of the product. This field is required, ensuring each product has an associated URL.
+- **`thumbnail`**: A string representing the URL of the product's thumbnail. This field is required, ensuring each product has an associated thumbnail.
 
 ### Comments Collection
 
@@ -156,7 +130,7 @@ The `comments` collection represents comments made on videos in your application
 
 - **`_id`**: The unique identifier for the comment, automatically generated by MongoDB.
 - **`comment`**: A string representing the content of the comment. It is a required field, ensuring that every comment document has a comment text.
-- **`username`**: A string representing the username of the commenter. It is a required field, ensuring that every comment document has a username associated with it.
+- **`userId`**: A reference to the owner or author for this comment. It is of type `mongoose.Schema.Types.ObjectId` and references the `users` collection, ensuring the integrity of the relationship with users.
 - **`videoId`**: A reference to the corresponding video for this comment. It is of type `mongoose.Schema.Types.ObjectId` and references the `videos` collection, ensuring the integrity of the relationship with videos.
 - **`timestamp`**: A date representing the timestamp of when the comment was made. It is a required field and defaults to the current date when not provided.
 
@@ -167,17 +141,26 @@ The `users` collection represents users in your application. Each user document 
 - **`_id`**: The unique identifier for the user, automatically generated by MongoDB.
 - **`name`**: A string representing the name of the user. It is a required field, ensuring that every user document has a name.
 - **`email`**: A string representing the email address of the user. It is a unique field, ensuring that each user has a distinct email address.
+- **`password`**: A secure string representing the user's password. This field is hashed and stored securely in the database to maintain user privacy.
 - **`profilePictUrl`**: A string representing the URL of the user's profile picture, if available.
 
-#### Please note:
+## Database Seeding
 
-- The collections have an `_id` field by default, provided by MongoDB.
-- The collection names are explicitly defined when creating the Mongoose models (i.e., 'videos', 'products', 'comments', 'users').
+To facilitate the initial setup and testing of the application, a database seeding process is available. The seeding process populates the database with sample data, making it easy to evaluate and interact with the application without starting from scratch.
 
-#### Additionally:
+To perform the database seeding, follow these steps:
 
-- The `comments` collection isn't directly connected to the `users` collection. As per the project requirements, we should provide the name in the payload when making a comment. So, let's assume that they are not connected to each other.
-- The `users` collection will come in handy for adding authentication in the next project
+1. Ensure you have the project's dependencies installed by running `npm install` if you haven't already.
+2. Open a terminal window in the project directory.
+3. Run the following command:
+
+   ```shell
+   npm run seed
+   ```
+
+   This command will execute the database seeding process, populating the necessary tables with sample data.
+
+Please note that this process is intended for development and testing purposes. It's essential to have a backup of your data before running the seeding command, as it will overwrite existing data in the database.
 
 ## API Endpoints List
 
