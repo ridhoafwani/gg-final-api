@@ -20,7 +20,7 @@ class CommentService {
 
     getCommentsByVideoId = async (videoId) => {
         try {
-            const comments = await this.Comment.find({ videoId }).populate('userId', 'name profilePictUrl', this.user).exec();
+            const comments = await this.Comment.find({ videoId }).populate('userId', 'name profilePictUrl', this.User).exec();
 
             if (!comments) {
                 throw new NotFoundError('Comments not found');
